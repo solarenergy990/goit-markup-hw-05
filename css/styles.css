@@ -60,6 +60,7 @@ ul {
   margin-left: auto;
   margin-right: auto;
 }
+
 /* site nav*/
 .main {
   display: flex;
@@ -251,6 +252,59 @@ ul {
 .primary {
   padding-top: 200px;
 }
+.backdrop {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 2;
+
+  opacity: 1;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) scale(0.9);
+}
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  min-width: 528px;
+  min-height: 581px;
+
+  background: #ffffff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.close-button {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+
+  background-color: var(--main-white);
+
+  display: block;
+  cursor: pointer;
+}
 /* section */
 .list-item-icon {
   padding: 0;
@@ -288,6 +342,9 @@ ul {
 .customers-icon:focus {
   fill: var(--accent);
   border: 1px solid var(--accent);
+
+  transition: border 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .customers {
   display: flex;
@@ -324,6 +381,8 @@ ul {
 .social-icon:focus {
   fill: var(--main-white);
   background-color: var(--accent);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .section {
   padding-top: 94px;
@@ -413,6 +472,12 @@ ul {
 .button:hover {
   color: var(--main-white);
   background-color: var(--accent);
+  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08),
+    0px 2px 2px rgba(0, 0, 0, 0.12);
+
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .example-title {
   font-weight: 700;
@@ -436,15 +501,43 @@ ul {
   border: 1px solid #eeeeee;
   border-top: none;
 }
-.examples {
+.service {
   display: flex;
   justify-content: center;
 }
 
-.examples li:not(:last-child) {
+.service li:not(:last-child) {
   margin-right: 30px;
 }
 
+.service-thumb {
+  position: relative;
+}
+
+.service-thumb img {
+  display: block;
+}
+
+.services-description {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  background: rgba(47, 48, 58, 0.8);
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 27px;
+  padding-bottom: 27px;
+  width: 100%;
+
+  font-weight: 700;
+  font-size: var(--primary-text-size);
+  line-height: 1.14;
+  text-align: center;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--main-white);
+}
 .our-team {
   background-color: var(--secondary-background-colour);
 }
@@ -487,6 +580,7 @@ ul {
 .portfolio-example a:focus {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .portfolio-example:not(:nth-child(3n)) {
   margin-right: 30px;
@@ -498,6 +592,39 @@ ul {
   text-decoration: none;
   display: block;
 }
+.portfolio-thumb {
+  position: relative;
+  overflow: hidden;
+}
+.thumb-box {
+  position: absolute;
+  background-color: rgba(33, 150, 243, 0.9);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateY(100%);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.thumb-description {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 63px 24px;
+
+  font-weight: var(--primary-text-weight);
+  font-size: 18px;
+  line-height: 1.56;
+  letter-spacing: 0.03em;
+  color: var(--main-white);
+}
+
+.portfolio-example:hover .thumb-box {
+  transform: translateY(0);
+}
 /*footer*/
 .footer {
   background-color: var(--hero-footer-colour);
@@ -506,6 +633,7 @@ ul {
 }
 .footer-banner {
   display: flex;
+  align-items: baseline;
 }
 .footer-logo {
   color: var(--main-white);
@@ -570,6 +698,9 @@ ul {
 .footer-icon:focus {
   fill: var(--main-white);
   background-color: var(--accent);
+
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .social-join {
@@ -582,5 +713,4 @@ ul {
   color: var(--main-white);
   margin-top: 0;
   margin-bottom: 20px;
-  padding-top: 12px; /*just to make it look as layout*/
 }
